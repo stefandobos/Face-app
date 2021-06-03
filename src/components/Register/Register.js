@@ -16,7 +16,7 @@ function Register ({onRouteChange, loadUser}) {
     }
 
     const onSubmitRegister = () =>{
-        fetch('http://localhost:3001/register', {
+        fetch('https://whispering-mountain-94131.herokuapp.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
