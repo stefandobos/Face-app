@@ -7,6 +7,9 @@ import * as blazeface from '@tensorflow-models/blazeface';
 import Signin from './components/Signin/Signin'
 import Register from './components/Register/Register';
 import '@tensorflow/tfjs-backend-webgl';
+import * as blazeface from '@tensorflow-models/blazeface';
+import '@tensorflow/tfjs-backend-webgl';
+import '@tensorflow/tfjs-backend-cpu';
 
 
 function App() {
