@@ -1,6 +1,6 @@
 import { useState } from "react/cjs/react.development";
 
-function Register ({onRouteChange, loadUser}) {
+function Register ({onRouteChange, loadUser, loadImg}) {
     const [RegisterInEmail,  setEmail] = useState('');
     const [RegisterInPassword, setPassword] = useState('');
     const [name, setName] = useState('');
@@ -30,6 +30,7 @@ function Register ({onRouteChange, loadUser}) {
                 if (user){
                     loadUser(user);
                     onRouteChange('home');
+                    loadImg();
                 }
             })
     }

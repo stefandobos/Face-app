@@ -1,6 +1,6 @@
 import { useState } from "react/cjs/react.development";
 
-function Signin ({onRouteChange, loadUser}) {
+function Signin ({onRouteChange, loadUser, loadImg}) {
     const [SignInEmail,  setEmail] = useState('');
     const [SignInPassword, setPassword] = useState('');
 
@@ -15,6 +15,7 @@ function Signin ({onRouteChange, loadUser}) {
         fetch('https://whispering-mountain-94131.herokuapp.com/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
+            mode: 'cors',
             body: JSON.stringify({
                 email: SignInEmail,
                 password: SignInPassword
@@ -25,6 +26,7 @@ function Signin ({onRouteChange, loadUser}) {
                 if (user.id){
                     loadUser(user)
                     onRouteChange('home');
+                    loadImg();
                 }
             })
     }

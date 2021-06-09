@@ -10,7 +10,6 @@ import '@tensorflow/tfjs-backend-webgl';
 
 
 function App() {
-  const [input, setInput] = useState('');
   const [route, setRoute] = useState('signin');
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [user, setUser] = useState({name: '', id: '', email: '', joined: ''});
@@ -34,9 +33,9 @@ function App() {
     const returnTensors = false; 
     const predictions = await model.estimateFaces(document.getElementById("myCanvas"), returnTensors);
     console.log(predictions)
-    if (predictions.length > 0) {
-        const start = predictions[0].topLeft;
-        const end = predictions[0].bottomRight;
+    for (let i = 0; i < predictions.length; i++) {
+        const start = predictions[i].topLeft;
+        const end = predictions[i].bottomRight;
         const size = [end[0] - start[0], end[1] - start[1]];
         ctx.lineWidth = 3;
         ctx.strokeStyle = 'red';
@@ -45,28 +44,36 @@ function App() {
     }
   }
 
-  const onInputChange = (event) => {
-    setInput(event.target.value);
-  }
-
   const onButtonSubmit = () => {
-    loadImg();
     faceDetect();
   }
 
   const loadImg = () => {
-    var linkImg = new Image();
-    linkImg.crossOrigin = '';
-    var c = document.getElementById('myCanvas');
-    var ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, c.width, c.height);
-    linkImg.onload = function() {
-      c.width = this.naturalWidth;
-      c.height = this.naturalHeight;
-      ctx.drawImage(this, 0, 0);
-    };
-      linkImg.src = input;
-      console.log(input)
+    let imgInput = document.getElementById('face-image');
+    if(imgInput){
+      imgInput.addEventListener('change', function(e){
+        if(e.target.files){
+          let imageFile = e.target.files[0];
+          var reader = new FileReader();
+          console.log(imageFile)
+          if(imageFile){
+            console.log(imageFile)
+            reader.readAsDataURL(imageFile);
+          }
+          reader.onloadend = (e) => {
+            const image = new Image();
+            image.src = e.target.result;
+            image.onload = (ev) => {
+              var c = document.getElementById("myCanvas");
+              var ctx = c.getContext("2d");
+              c.width = image.width;
+              c.height = image.height; 
+              ctx.drawImage(image,0,0); 
+            }
+          }
+        }
+      })
+    }
   }
 
   const onRouteChange = (route) => {
@@ -85,16 +92,16 @@ function App() {
         route === 'home' 
         ? <div>
             <ImageLinkForm 
-            onInputChange={onInputChange}
             onButtonSubmit={onButtonSubmit}
+            loadImg={loadImg}
             name={user.name}
             />
             <FaceRecognition/>
           </div>
         : (
           route === 'signin' 
-          ? <Signin onRouteChange={onRouteChange} loadUser={loadUser}/>
-          : <Register loadUser={loadUser} onRouteChange={onRouteChange}/>
+          ? <Signin onRouteChange={onRouteChange} loadUser={loadUser} loadImg={loadImg}/>
+          : <Register loadUser={loadUser} onRouteChange={onRouteChange} loadImg={loadImg}/>
         )
      }
     </div>
