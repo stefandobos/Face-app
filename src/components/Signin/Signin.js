@@ -59,8 +59,8 @@ function Signin ({onRouteChange, loadUser, loadImg}) {
             <article className='br4 ba dark-gray b--dark-pink mv4 h-50 w5 w-20 mw6 ma0 fr'>
                 <main className='pa3'>
                     <p className="db f4">In register you don't need to use a real email, but if you don't want to register connect with: </p>
-                    <p className='db f5'>Email: costica@gmail.com</p>
-                    <p className='db f5'>Password: manele</p>
+                    <p className='db f5'>Email: vlad@gmail.com</p>
+                    <p className='db f5'>Password: password</p>
                 </main>
             </article>
         </div>
